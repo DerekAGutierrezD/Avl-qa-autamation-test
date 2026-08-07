@@ -66,7 +66,7 @@ newman run api-tests/avl-api-tests.json -r htmlextra --reporter-htmlextra-export
 ## Estructura del proyecto
 
 ```
-/mi-proyecto-qa
+/Avl-qa-automation-test
 ├── .gitignore
 ├── README.md
 ├── AI_USAGE.md
