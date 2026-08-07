@@ -1,0 +1,31 @@
+appId: com.saucelabs.mydemoapp.android
+---
+# Caso: Manejo de credenciales inválidas — campo username vacío
+# Hallazgo de QA: la app no valida combinaciones de usuario/contraseña incorrectas
+# a nivel de negocio, pero sí valida la ausencia del campo username.
+# Se ajustó el caso de prueba al comportamiento real observado en la app.
+
+- launchApp
+- tapOn: "View menu"
+- tapOn: "Log In"
+- assertVisible:
+    id: "nameET"
+- assertVisible:
+    id: "passwordET"
+
+# Dejamos username vacío, solo llenamos password
+- tapOn:
+    id: "passwordET"
+- inputText: "cualquierPassword123"
+
+- tapOn:
+    text: "Login"
+    index: 1
+
+# Aserción: debe aparecer el mensaje de error de campo requerido
+- assertVisible:
+    text: "Username is required"
+
+# Confirmamos que NO avanzó de pantalla
+- assertVisible:
+    id: "nameET"

@@ -1,0 +1,31 @@
+appId: com.saucelabs.mydemoapp.android
+---
+# Caso: Login exitoso con credenciales válidas
+# Precondición: la app abre en la pantalla principal; hay que entrar al menú
+# y tocar "Log In" para llegar al formulario de login
+
+- launchApp
+- tapOn: "View menu"
+- tapOn: "Log In"
+- assertVisible:
+    id: "nameET"
+- assertVisible:
+    id: "passwordET"
+
+
+- tapOn:
+    id: "nameET"
+- inputText: "bod@example.com"
+- tapOn:
+    id: "passwordET"
+- inputText: "10203040"
+
+- tapOn:
+    text: "Login"
+    index: 1
+
+# Aserción: confirmamos que salimos de la pantalla de login
+- assertNotVisible:
+    id: "nameET"
+- assertVisible:
+    text: "View menu"

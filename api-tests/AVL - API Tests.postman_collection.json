@@ -1,0 +1,125 @@
+{
+  "info": {
+    "_postman_id": "3138a817-d8b8-4a23-978a-3767211817f9",
+    "name": "AVL - API Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "44553290",
+    "_collection_link": "https://go.postman.co/collection/44553290-3138a817-d8b8-4a23-978a-3767211817f9?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Creación producto",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code es 200 o 201\", function () \r",
+              "    {\r",
+              "        pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+              "    });\r",
+              "\r",
+              "pm.test(\"Tiempo de respuesta menor a 1.5s\", function ()\r",
+              "    {\r",
+              "        pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+              "    });\r",
+              "\r",
+              "pm.test(\"La respuesta tiene un id\", function ()\r",
+              "    {\r",
+              "        const json = pm.response.json();\r",
+              "        pm.expect(json).to.have.property('id');\r",
+              "    });\r",
+              "\r",
+              "const schema = { \r",
+              "    type: \"object\", required: [\"id\", \"title\", \"price\"],\r",
+              "    properties: {\r",
+              "        id: { type: \"number\" },\r",
+              "        title: { type: \"string\" },\r",
+              "        price: { type: \"number\" }\r",
+              "        }\r",
+              "    };\r",
+              "\r",
+              "pm.test(\"La respuesta cumple el JSON Schema\", function ()\r",
+              "    {\r",
+              "        pm.response.to.have.jsonSchema(schema);\r",
+              "    });"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"title\": \"Producto de prueba AVL\", \"price\": 45.99, \"category\": \"electronics\" }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://dummyjson.com/products/add",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "products",
+            "add"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Actualizar producto",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status 200\", () => pm.response.to.have.status(200));\r",
+              "pm.test(\"Tiempo < 1.5s\", () => pm.expect(pm.response.responseTime).to.be.below(1500));\r",
+              "pm.test(\"El title se actualizó correctamente\", () => { const json = pm.response.json(); pm.expect(json.title).to.eql(\"Producto actualizado AVL\"); });"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"title\": \"Producto actualizado AVL\", \"price\": 99.99 }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://dummyjson.com/products/1",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "products",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

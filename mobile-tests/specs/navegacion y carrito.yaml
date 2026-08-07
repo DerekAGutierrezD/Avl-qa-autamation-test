@@ -1,0 +1,30 @@
+appId: com.saucelabs.mydemoapp.android
+---
+# Caso: Navegación entre pantallas + aserción de cambio de estado
+# Flujo: Menú -> Catálogo -> Detalle de producto -> Agregar al carrito -> Revisar el carrito
+
+- launchApp
+
+# Navegación 1: abrir el menú
+- tapOn: "View menu"
+- assertVisible: "Catalog"
+
+# Navegación 2: entrar al catálogo (segunda pantalla distinta)
+- tapOn: "Catalog"
+- assertVisible: "Product Image"
+
+# Entrar al detalle del producto
+- tapOn: "Product Image"
+
+# Aserción de cambio de estado: agregar al carrito
+- tapOn: "Add to cart"
+- assertVisible:
+    text: "1"
+
+# Ajustar selector según lo que muestre el ícono/badge del carrito
+- tapOn:
+    text: "Displays number of items in your cart"
+    index: 1
+- assertVisible: "Displays selected product"
+
+
